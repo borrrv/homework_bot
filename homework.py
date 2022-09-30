@@ -121,7 +121,9 @@ def parse_status(homework):
 
 def check_tokens():
     """Verification environment variable."""
-    if (TELEGRAM_TOKEN is None and PRACTICUM_TOKEN is None and TELEGRAM_CHAT_ID is None):
+    if (TELEGRAM_TOKEN is None
+        and PRACTICUM_TOKEN is None
+            and TELEGRAM_CHAT_ID is None):
         logger.critical('Environment variables not found')
         return False
     else:
