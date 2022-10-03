@@ -67,8 +67,11 @@ def get_api_answer(current_timestamp):
         logger.error('Network problem, please try again later')
     if response.status_code == HTTPStatus.OK:
         status_code = response.status_code
-        response = response.json()
-        return response
+        try:
+            response = response.json()
+            return response
+        except Exception:
+            logger.error('Unidentified format, json expected')
     else:
         raise Exception(f'Error {status_code}')
 
