@@ -126,23 +126,24 @@ def check_tokens():
 
 def main():
     """General logic of work."""
+    old_version_message = None
     if not check_tokens():
         raise Exception('Environment variable not found')
     bot = telegram.Bot(token=TELEGRAM_TOKEN)
     current_timestamp = int(time.time())
-    status = ''
     while True:
         try:
             response = get_api_answer(current_timestamp)
-            homework = check_response(response)
-            homework_status = parse_status(homework)
-            if homework_status != homework.get(status):
-                message = parse_status(homework)
-                send_message(bot, message)
-            logger.info(
-                'Update not found, please check after 10 minutes'
-            )
-            time.sleep(settings.RETRY_TIME)
+            homeworks = check_response(response)
+            for homework in homeworks:
+                homework_status = parse_status(homework)
+                if homework_status != old_version_message:
+                    message = old_version_message
+                    send_message(bot, message)
+                logger.info(
+                    'Update not found, please check after 10 minutes'
+                )
+                time.sleep(settings.RETRY_TIME)
 
         except Exception as error:
             message = f'{error}'
