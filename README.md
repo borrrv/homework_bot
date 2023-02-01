@@ -7,5 +7,5 @@
 
 - Логгирование работы бота
 ## Стек
-- telegram
+- Python-telegram-bot
 - Python
